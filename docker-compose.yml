@@ -1,0 +1,26 @@
+services:
+  rabbitmq:
+    image: "rabbitmq:3.10-management"
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"   # Puerto para la comunicación de la aplicación
+      - "15672:15672" # Puerto para la interfaz de gestión web
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+      - microservices-net
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - ~/.docker-conf/mongodb/data/db:/data/db
+    networks:
+      - microservices-net
+
+networks:
+  microservices-net:
+    driver: bridge

@@ -1,0 +1,5 @@
+fastapi
+uvicorn[standard]
+pika  # Cliente de Python para RabbitMQ
+pymongo # Driver de Python para MongoDB
+python-dotenv # Para manejar variables de entorno
