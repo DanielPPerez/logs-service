@@ -1,5 +1,6 @@
 # src/presentation/api.py
 from fastapi import FastAPI, Query, HTTPException
+from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from typing import List, Optional
 from contextlib import asynccontextmanager
 import threading
@@ -37,6 +38,13 @@ app = FastAPI(
     description="API para centralizar y consultar logs de microservicios.",
     version="1.0.0",
     lifespan=lifespan
+)
+
+# Middleware de seguridad (MSTG-NETWORK-1)
+# Solo acepta requests del API Gateway o hosts confiables
+app.add_middleware(
+    TrustedHostMiddleware,
+    allowed_hosts=["api.scriptoria.com", "localhost", "logs-service", "127.0.0.1"]
 )
 
 # --- Endpoints de la API ---
